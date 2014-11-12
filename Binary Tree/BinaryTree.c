@@ -20,11 +20,6 @@ typedef struct list_node
 	int right_height;
 }node;
 
-struct binary_tree
-{
-	node* root;
-};
-
 
 
 int max(int a, int b)

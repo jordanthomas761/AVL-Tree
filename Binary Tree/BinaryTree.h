@@ -13,8 +13,12 @@
 
 
 
+typedef struct list_node node;
 
-typedef struct binary_tree BinaryTree;
+typedef struct binary_tree
+{
+    node* root;
+}BinaryTree;
 
 BinaryTree create_tree();
 
