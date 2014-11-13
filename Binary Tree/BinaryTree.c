@@ -289,6 +289,17 @@ void Insert(BinaryTree* t, int key, void* value)
     }
 }
 
+void* Find(BinaryTree* t, int key)
+{
+	node* temp = searchfornode(t->root, key);
+	return temp->value;
+}
+
+void Delete(BinaryTree* t, int key)
+{
+	
+}
+
 
 void PrintPreOrder(BinaryTree* t)
 {

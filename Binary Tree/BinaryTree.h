@@ -24,7 +24,7 @@ BinaryTree create_tree();
 
 void Insert(BinaryTree* t, int key, void* value);
 void* Find(BinaryTree* t, int key);
-void Delete(BinaryTree* t, int key);
+void Delete(BinaryTree* t, int key);//Not Implmented yet
 void PrintPreOrder(BinaryTree* t);
 void PrintInOrder(BinaryTree* t);
 void PrintPostOrder(BinaryTree* t);

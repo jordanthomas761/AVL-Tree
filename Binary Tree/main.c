@@ -11,19 +11,19 @@
 
 int main(int argc, const char * argv[]) {
     BinaryTree b= create_tree();
-    Insert(&b, 20);
-    Insert(&b, 42);
-    Insert(&b, 32);
-    Insert(&b, 50);
-    Insert(&b, 6);
-    Insert(&b, 7);
-    Insert(&b, 4);
-    Insert(&b, 1);
-    Insert(&b, 100);
-    Insert(&b, 90);
-    Insert(&b, 80);
-    Insert(&b, 70);
-    Insert(&b, 39);
+    Insert(&b, 20, "jordan");
+    Insert(&b, 42, "james");
+    Insert(&b, 32, "jack");
+    Insert(&b, 50, (void*)9);
+    Insert(&b, 6, (void*)12);
+    Insert(&b, 7, (void*)'j');
+    Insert(&b, 4, (void*)'x');
+    Insert(&b, 1, (void*)'v');
+    Insert(&b, 100, "abby");
+    Insert(&b, 90, "gabby");
+    Insert(&b, 80, "grace");
+    Insert(&b, 70, "david");
+    Insert(&b, 39, "Chris");
     printf("pre-order\n");
     PrintPreOrder(&b);
     printf("in-order\n");
@@ -32,5 +32,6 @@ int main(int argc, const char * argv[]) {
     PrintPostOrder(&b);
     printf("Distance from root %d\n",DistanceFromRoot(&b, 70));
     printf("tree height %d\n",TreeHeight(&b));
+    printf("item: %s\n",Find(&b, 70));
     return 0;
 }
