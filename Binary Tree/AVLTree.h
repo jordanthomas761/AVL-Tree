@@ -18,17 +18,17 @@ typedef struct list_node node;
 typedef struct binary_tree
 {
     node* root;
-}BinaryTree;
+}AVLTree;
 
-BinaryTree create_tree();
+AVLTree create_tree();
 
-void Insert(BinaryTree* t, int key, void* value);
-void* Find(BinaryTree* t, int key);
-void Delete(BinaryTree* t, int key);//Not Implmented yet
-void PrintPreOrder(BinaryTree* t);
-void PrintInOrder(BinaryTree* t);
-void PrintPostOrder(BinaryTree* t);
-int DistanceFromRoot(BinaryTree* t, int item);
-int TreeHeight(BinaryTree* t);
+void Insert(AVLTree* t, int key, void* value);
+void* Find(AVLTree* t, int key);
+void Delete(AVLTree* t, int key);//Not Implmented yet
+void PrintPreOrder(AVLTree* t);
+void PrintInOrder(AVLTree* t);
+void PrintPostOrder(AVLTree* t);
+int DistanceFromRoot(AVLTree* t, int item);
+int TreeHeight(AVLTree* t);
 
 #endif /* defined(__Binary_Tree__BinaryTree__) */

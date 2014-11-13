@@ -7,12 +7,13 @@
 //
 
 #include <stdio.h>
-#include "BinaryTree.h"
+#include "AVLTree.h"
 
 int main(int argc, const char * argv[]) {
-    BinaryTree b= create_tree();
+    AVLTree b= create_tree();
     Insert(&b, 20, "jordan");
     Insert(&b, 42, "james");
+    Delete(&b, 20);
     Insert(&b, 32, "jack");
     Insert(&b, 50, (void*)9);
     Insert(&b, 6, (void*)12);
@@ -32,6 +33,9 @@ int main(int argc, const char * argv[]) {
     PrintPostOrder(&b);
     printf("Distance from root %d\n",DistanceFromRoot(&b, 70));
     printf("tree height %d\n",TreeHeight(&b));
-    printf("item: %s\n",Find(&b, 70));
+    printf("item: %s\n",Find(&b, 42));
+    Delete(&b, 42);
+    printf("item: %s\n",Find(&b, 39));
+    printf("tree height %d\n",TreeHeight(&b));
     return 0;
 }

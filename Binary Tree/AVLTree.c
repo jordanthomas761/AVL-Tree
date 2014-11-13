@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jordan Thomas. All rights reserved.
 //
 
-#include "BinaryTree.h"
+#include "AVLTree.h"
 #include <stdlib.h>
 
 typedef struct list_node
@@ -34,19 +34,13 @@ void update_height(node* n)
 {
 	if(n->parent != NULL && n->parent->key < n->key)
 	{
-		if (n->parent->right_height <= max(n->left_height, n->right_height) )
-		{
-			n->parent->right_height = max(n->left_height, n->right_height) + 1;
-			update_height(n->parent);
-		}
+		n->parent->right_height = max(n->left_height, n->right_height) + 1;
+		update_height(n->parent);
 	}
 	else if(n->parent != NULL && n->parent->key > n->key)
 	{
-		if (n->parent->left_height <= max(n->left_height, n->right_height) )
-		{
-			n->parent->left_height = max(n->left_height, n->right_height) + 1;
-			update_height(n->parent);
-		}
+		n->parent->left_height = max(n->left_height, n->right_height) + 1;
+		update_height(n->parent);
 	}
 }
 
@@ -222,6 +216,69 @@ node* searchfornode(node* n, int item)
 	return temp;
 }
 
+void DeleteNode(node* n)
+{
+	if (n->left == NULL && n->right ==NULL)
+	{
+		if(n->parent != NULL)
+		{
+			if(n->key > n->parent->key)
+			{
+				n->parent->right = NULL;
+				n->parent->right_height =0;
+				update_height(n->parent);
+				balance_tree(n->parent);
+			}
+			else
+			{
+				n->parent->left = NULL;
+				n->parent->left_height =0;
+				update_height(n->parent);
+				balance_tree(n->parent);
+			}
+		}
+	}
+	else if (n->left != NULL ^ n->right != NULL)
+	{
+		if(n->parent != NULL)
+		{
+			if(n->left != NULL)
+			{
+				n->left->parent= n->parent;
+				n->parent->left= n->left;
+				update_height(n->left);
+				balance_tree(n->left);
+			}
+			else
+			{
+				n->right->parent= n->parent;
+				n->parent->right= n->right;
+				update_height(n->right);
+				balance_tree(n->right);
+			}
+		}
+		else
+		{
+			if(n->left != NULL)
+			{
+				n->left->parent= NULL;
+				update_height(n->left);
+				balance_tree(n->left);
+			}
+			else
+			{
+				n->right->parent= NULL;
+				update_height(n->right);
+				balance_tree(n->right);
+			}
+		}
+	}
+	else
+	{
+		
+	}
+}
+
 int node_distancefromroot(node* n)
 {
 	if (n->parent == NULL)
@@ -261,14 +318,14 @@ void node_postorder(node* n)
     printf("%d\n",n->key);
 }
 
-BinaryTree create_tree()
+AVLTree create_tree()
 {
-	BinaryTree b;
+	AVLTree b;
 	b.root=NULL;
 	return b;
 }
 
-void Insert(BinaryTree* t, int key, void* value)
+void Insert(AVLTree* t, int key, void* value)
 {
     if(t->root == NULL)
     {
@@ -289,34 +346,50 @@ void Insert(BinaryTree* t, int key, void* value)
     }
 }
 
-void* Find(BinaryTree* t, int key)
+void* Find(AVLTree* t, int key)
 {
 	node* temp = searchfornode(t->root, key);
-	return temp->value;
+	if(temp == NULL)
+		return "value not in tree";
+	else
+		return temp->value;
 }
 
-void Delete(BinaryTree* t, int key)
+void Delete(AVLTree* t, int key)
 {
-	
+	node* temp = searchfornode(t->root, key);
+	DeleteNode(temp);
+	if (temp == t->root)
+	{
+		if(temp->left != NULL)
+			t->root = t->root->left;
+		else if(temp->right != NULL)
+			t->root = t->root->right;
+		else
+			t->root = NULL;
+	}
+	if (t->root != NULL && t->root->parent !=NULL)
+		t->root=t->root->parent;
+	free(temp);
 }
 
 
-void PrintPreOrder(BinaryTree* t)
+void PrintPreOrder(AVLTree* t)
 {
     node_preorder(t->root);
 }
 
-void PrintInOrder(BinaryTree* t)
+void PrintInOrder(AVLTree* t)
 {
     node_inorder(t->root);
 }
 
-void PrintPostOrder(BinaryTree* t)
+void PrintPostOrder(AVLTree* t)
 {
     node_postorder(t->root);
 }
 
-int DistanceFromRoot(BinaryTree* t, int item)
+int DistanceFromRoot(AVLTree* t, int item)
 {
 	node* temp = searchfornode(t->root, item);
 	int a= -1;
@@ -331,7 +404,7 @@ int DistanceFromRoot(BinaryTree* t, int item)
     return a;
 }
 
-int TreeHeight(BinaryTree* t)
+int TreeHeight(AVLTree* t)
 {
 	return max(t ->root->left_height, t ->root->right_height);
 }
